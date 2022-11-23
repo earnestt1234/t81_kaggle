@@ -24,7 +24,7 @@ items = pd.read_csv(os.path.join(DATA_FOLDER, 'items.csv'))
 
 merger = items[['id', 'store_id', 'kcal']]
 merger = merger.rename({'id':'item_id'}, axis=1)
-merger = pd.get_dummies(merger, columns=['store_id'], drop_first=True)
+merger = pd.get_dummies(merger, columns=['store_id'])
 df = df.merge(merger, on='item_id')
 
 #%% days relative to June 2020
@@ -45,7 +45,7 @@ df['holiday'] = [1 if d in us_holidays else 0 for d in df['date']]
 
 df['weekday'] = df['date'].dt.dayofweek
 df['quarter'] = df['date'].dt.quarter
-df = pd.get_dummies(df, columns=['weekday', 'quarter'], drop_first=True)
+df = pd.get_dummies(df, columns=['weekday', 'quarter'])
 
 #%% Save
 
