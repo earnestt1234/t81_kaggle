@@ -33,6 +33,7 @@ df = df.merge(merger, on='item_id')
 xdate = pd.Timestamp('06-20-2020')
 diff = df['date'] - xdate
 df['diff_june_2020'] = diff.dt.days
+df['after_june_2020'] = df['date'] >= xdate
 
 #%% holidays
 
@@ -46,6 +47,13 @@ df['holiday'] = [1 if d in us_holidays else 0 for d in df['date']]
 df['weekday'] = df['date'].dt.dayofweek
 df['quarter'] = df['date'].dt.quarter
 df = pd.get_dummies(df, columns=['weekday', 'quarter'])
+
+#%% Add yolo
+
+yolo = pd.read_csv('yolo_kaggle_images.csv')
+yolo['date'] = pd.to_datetime(yolo['date'])
+df = df.merge(yolo, on='date')
+
 
 #%% Save
 
